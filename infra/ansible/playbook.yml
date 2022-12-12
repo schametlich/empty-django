@@ -1,0 +1,22 @@
+---
+
+- name: Create full django project
+  hosts: all
+  become: true
+  become_user: root
+  remote_user: ubuntu
+  vars:
+    update_apt_cache: true
+    username: ubuntu
+    project_dir: /home/ubuntu/empty-django/app
+    project_name: app
+    db_name: app
+    db_user: app
+    db_password: 123qwe
+
+  roles:
+    - server
+    - pg
+    - django
+    - nginx
+    - gunicorn

@@ -1,0 +1,26 @@
+---
+- name: Install gunicorn
+  become: true
+  ansible.builtin.pip:
+    name: gunicorn
+
+- name: Create gunicorn systemd unit
+  become: true
+  ansible.builtin.template:
+    src: templates/gunicorn.tpl
+    dest: /etc/systemd/system/gunicorn.service
+    mode: 0644
+
+- name: Reload gunicorn
+  become: true
+  ansible.builtin.systemd:
+    name: gunicorn
+    daemon_reload: true
+    enabled: true
+
+- name: Start gunicorn
+  become: true
+  ansible.builtin.systemd:
+    name: gunicorn
+    state: restarted
+    enabled: true

@@ -1,0 +1,28 @@
+---
+- name: Install Nginx
+  become: true
+  ansible.builtin.apt:
+    pkg: nginx
+    state: present
+
+- name: Nginx conf
+  become: true
+  ansible.builtin.template:
+    src: templates/nginx.tpl
+    dest: /etc/nginx/sites-enabled/default
+    mode: 0644
+
+- name: Reload nginx
+  become: true
+  ansible.builtin.systemd:
+    name: nginx
+    daemon_reload: true
+    enabled: true
+
+- name: Start nginx
+  become: true
+  ansible.builtin.systemd:
+    name: nginx
+    state: restarted
+    enabled: true
+

@@ -1,0 +1,6 @@
+---
+
+all:
+  hosts:
+    stage:
+      ansible_host: 158.160.52.5

@@ -1,0 +1,17 @@
+---
+- name: Get project
+  ansible.builtin.git:
+    repo: https://github.com/schametlich/empty-django.git
+    dest: "{{ project_dir }}"
+    clone: yes
+    update: yes
+
+- name: Install requirements
+  ansible.builtin.pip:
+    requirements: "{{ project_dir }}/requirements.txt"
+
+- name: Migrate
+  command: "python3 {{ project_dir }}/{{ project_name }}/manage.py migrate"
+
+- name: Static
+  command: "python3 {{ project_dir }}/{{ project_name }}/manage.py collectstatic --no-input"
